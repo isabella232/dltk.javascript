@@ -10,11 +10,14 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.dltk.core.environment.IDeployment;
+import org.eclipse.dltk.core.environment.IFileHandle;
 import org.eclipse.dltk.internal.launching.AbstractInterpreterInstallType;
 import org.eclipse.dltk.javascript.core.JavaScriptNature;
 import org.eclipse.dltk.javascript.launching.JavaScriptLaunchingPlugin;
@@ -37,7 +40,7 @@ public class GenericJavaScriptInstallType extends
 		return "Generic Rhino install";
 	}
 
-	public LibraryLocation[] getDefaultLibraryLocations(File installLocation,
+	public LibraryLocation[] getDefaultLibraryLocations(IFileHandle installLocation,
 			EnvironmentVariable[] variables, IProgressMonitor monitor) {
 		Bundle bundle = Platform.getBundle(EMBEDDED_RHINO_BUNDLE_ID);
 
@@ -84,11 +87,11 @@ public class GenericJavaScriptInstallType extends
 		environment.remove("DISPLAY");
 	}
 
-	public IStatus validateInstallLocation(File installLocation) {
+	public IStatus validateInstallLocation(IFileHandle installLocation) {
 		return Status.OK_STATUS;
 	}
 
-	protected File createPathFile() throws IOException {
+	protected IPath createPathFile(IDeployment deployment) throws IOException {
 		// this method should not be used
 		throw new RuntimeException("This method should not be used");
 	}
