@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.dltk.console.ScriptConsoleServer;
-import org.eclipse.dltk.core.environment.EnvironmentsManager;
+import org.eclipse.dltk.core.environment.EnvironmentManager;
 import org.eclipse.dltk.core.environment.IExecutionEnvironment;
 import org.eclipse.dltk.core.environment.IFileHandle;
 import org.eclipse.dltk.javascript.core.JavaScriptNature;
@@ -24,7 +24,7 @@ public class JavaScriptConsoleUtil {
 		String[] args = new String[] { "127.0.0.1", port, id };
 
 		// TODO: Add environments support
-		IExecutionEnvironment exeEnv = (IExecutionEnvironment) EnvironmentsManager
+		IExecutionEnvironment exeEnv = (IExecutionEnvironment) EnvironmentManager
 				.getLocalEnvironment().getAdapter(IExecutionEnvironment.class);
 		IFileHandle scriptFile = JavaScriptLaunchingPlugin.getDefault()
 				.getConsoleProxy(exeEnv);
