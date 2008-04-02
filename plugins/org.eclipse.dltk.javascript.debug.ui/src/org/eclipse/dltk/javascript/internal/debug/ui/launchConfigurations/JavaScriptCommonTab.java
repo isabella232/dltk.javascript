@@ -45,7 +45,7 @@ import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.debug.ui.ILaunchGroup;
 import org.eclipse.debug.ui.StringVariableSelectionDialog;
 import org.eclipse.dltk.core.DLTKCore;
-import org.eclipse.dltk.core.environment.EnvironmentsManager;
+import org.eclipse.dltk.core.environment.EnvironmentManager;
 import org.eclipse.dltk.core.environment.IExecutionEnvironment;
 import org.eclipse.dltk.core.environment.IFileHandle;
 import org.eclipse.dltk.internal.ui.util.SWTUtil;
@@ -938,7 +938,7 @@ public class JavaScriptCommonTab extends AbstractLaunchConfigurationTab {
 
 			IFileHandle proxyFile;
 			try {
-				IExecutionEnvironment exeEnv = (IExecutionEnvironment) EnvironmentsManager
+				IExecutionEnvironment exeEnv = (IExecutionEnvironment) EnvironmentManager
 						.getLocalEnvironment().getAdapter(
 								IExecutionEnvironment.class);
 				proxyFile = JavaScriptLaunchingPlugin.getDefault()
