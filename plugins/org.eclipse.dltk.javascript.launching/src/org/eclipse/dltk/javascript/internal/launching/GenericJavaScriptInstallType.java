@@ -16,8 +16,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.dltk.core.environment.EnvironmentPathUtils;
 import org.eclipse.dltk.core.environment.IDeployment;
+import org.eclipse.dltk.core.environment.IEnvironment;
 import org.eclipse.dltk.core.environment.IFileHandle;
+import org.eclipse.dltk.core.internal.environment.LocalEnvironment;
 import org.eclipse.dltk.internal.launching.AbstractInterpreterInstallType;
 import org.eclipse.dltk.javascript.core.JavaScriptNature;
 import org.eclipse.dltk.javascript.launching.JavaScriptLaunchingPlugin;
@@ -51,9 +54,13 @@ public class GenericJavaScriptInstallType extends
 			try {
 
 				File fl = new File(new URI(resolve.toString())).getParentFile()
-						.getParentFile().getParentFile().getParentFile();
-				return new LibraryLocation[] { new LibraryLocation(new Path(fl
-						.getAbsolutePath())) };
+						.getParentFile().getParentFile().getParentFile();				
+				IEnvironment env = LocalEnvironment.getInstance();
+				Path localPath = new Path(fl
+						.getAbsolutePath());
+				IPath fullPath = EnvironmentPathUtils.getFullPath(env, localPath);
+				LibraryLocation location = new LibraryLocation(fullPath);
+				return new LibraryLocation[] { location  };
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
