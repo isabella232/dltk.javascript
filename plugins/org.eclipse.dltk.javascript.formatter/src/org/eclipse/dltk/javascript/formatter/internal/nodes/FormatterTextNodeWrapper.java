@@ -7,36 +7,51 @@
  * http://www.eclipse.org/legal/epl-v10.html  
  *
  * Contributors:
- *     xored software, Inc. - initial API and Implementation (Vladimir Belov)
+ *     xored software, Inc. - initial API and Implementation (Alex Panchenko)
  *******************************************************************************/
-
 package org.eclipse.dltk.javascript.formatter.internal.nodes;
 
-import org.eclipse.dltk.formatter.FormatterTextNode;
 import org.eclipse.dltk.formatter.IFormatterContext;
 import org.eclipse.dltk.formatter.IFormatterDocument;
+import org.eclipse.dltk.formatter.IFormatterTextNode;
 import org.eclipse.dltk.formatter.IFormatterWriter;
 
-public class FormatterVirtualTextNode extends FormatterTextNode {
+public class FormatterTextNodeWrapper implements IFormatterTextNode {
 
-	private String text;
+	protected final IFormatterTextNode target;
 
-	public FormatterVirtualTextNode(IFormatterDocument document,
-			int startOffset, int endOffset, String text) {
-		super(document, startOffset, endOffset);
-		this.text = text;
+	public FormatterTextNodeWrapper(IFormatterTextNode target) {
+		this.target = target;
+	}
+
+	public String getText() {
+		return target.getText();
 	}
 
 	public void accept(IFormatterContext context, IFormatterWriter visitor)
 			throws Exception {
-		visitor.writeText(context, text);
+		target.accept(context, visitor);
 	}
 
-	public String getText() {
-		return this.text;
+	public IFormatterDocument getDocument() {
+		return target.getDocument();
 	}
 
+	public int getEndOffset() {
+		return target.getEndOffset();
+	}
+
+	public int getStartOffset() {
+		return target.getStartOffset();
+	}
+
+	public boolean isEmpty() {
+		return target.isEmpty();
+	}
+
+	@Override
 	public String toString() {
-		return getText();
+		return target.toString();
 	}
+
 }

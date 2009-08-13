@@ -33,6 +33,7 @@ public class BracketsNode extends FormatterBlockWithBeginEndNode {
 		this.configuration = configuration;
 	}
 
+	@Override
 	public void accept(IFormatterContext context, IFormatterWriter visitor)
 			throws Exception {
 
@@ -66,9 +67,10 @@ public class BracketsNode extends FormatterBlockWithBeginEndNode {
 
 	}
 
-	protected void acceptNodes(final List<IFormatterNode> nodes,
-			IFormatterContext context, IFormatterWriter visitor)
-			throws Exception {
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void acceptNodes(final List nodes, IFormatterContext context,
+			IFormatterWriter visitor) throws Exception {
 
 		if (isIndenting())
 			context.incIndent();
@@ -80,6 +82,7 @@ public class BracketsNode extends FormatterBlockWithBeginEndNode {
 
 	}
 
+	@Override
 	protected boolean isIndenting() {
 		return configuration.isIndenting();
 	}

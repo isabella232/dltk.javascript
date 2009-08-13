@@ -7,25 +7,15 @@
  * http://www.eclipse.org/legal/epl-v10.html  
  *
  * Contributors:
- *     xored software, Inc. - initial API and Implementation (Vladimir Belov)
+ *     xored software, Inc. - initial API and Implementation (Alex Panchenko)
  *******************************************************************************/
-
 package org.eclipse.dltk.javascript.formatter.internal.nodes;
 
-import org.eclipse.dltk.formatter.IFormatterDocument;
-import org.eclipse.dltk.javascript.formatter.JavaScriptFormatterConstants;
+import org.eclipse.dltk.compiler.util.Util;
 
-public class CaseBracesConfiguration extends AbstractBracesConfiguration {
-
-	public CaseBracesConfiguration(IFormatterDocument document) {
-		super(document);
-
-		bracesSettingName = JavaScriptFormatterConstants.BRACE_CASE;
-	}
-
-	@Override
-	public boolean isIndenting() {
-		return true;
-	}
-
+public class JSLiterals {
+	public static final String EMPTY = Util.EMPTY_STRING;
+	public static final String SPACE = " "; //$NON-NLS-1$
+	public static final String EOL = "\n"; //$NON-NLS-1$
+	public static final String SEMICOLON = ";"; //$NON-NLS-1$
 }
