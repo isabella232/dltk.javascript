@@ -205,6 +205,10 @@ tokens
 	EXPR ;
 	FORITER ;
 	FORSTEP ;
+	FOREACH ;
+	GETTER ;
+	SETTER ;
+	DEFAULT_XML_NAMESPACE ;
 	ITEM ;
 	LABELLED ;
 	NAMEDVALUE ;
@@ -231,11 +235,23 @@ package org.eclipse.dltk.javascript.parser;
 {
 private Token last;
 
+final static boolean isIdentifierKeyword(int token)
+{
+	return token == WXML
+		|| token == GET
+  		|| token == SET
+  		|| token == EACH
+  		|| token == NAMESPACE; 
+}
+
 private final boolean areRegularExpressionsEnabled()
 {
 	if (last == null)
 	{
 		return true;
+	}
+	if (isIdentifierKeyword(last.getType())) {
+		return true; 
 	}
 	switch (last.getType())
 	{
@@ -268,6 +284,9 @@ private final boolean areXmlExpressionsEnabled()
   {
     return false;
   }
+  	if (isIdentifierKeyword(last.getType())) {
+		return false; 
+	}
   switch (last.getType())
   {
   // identifier
@@ -339,6 +358,11 @@ public Token nextToken()
 	}
 	return result;		
 }
+
+@Override
+public void emitErrorMessage(String msg) {
+// IGNORE
+}
 }
 
 @parser::members
@@ -391,6 +415,9 @@ private final static boolean isLeftHandSideExpression(RuleReturnScope lhs)
 	}
 	else
 	{
+  		if (JSLexer.isIdentifierKeyword(((Tree)lhs.getTree()).getType())) {
+			return true;
+		}
 		switch (((Tree)lhs.getTree()).getType())
 		{
 		// primaryExpression
@@ -582,7 +609,7 @@ SingleLineComment
 
 token
 	: reservedWord
-	| Identifier
+	| identifier
 	| punctuator
 	| numericLiteral
 	| StringLiteral
@@ -714,24 +741,15 @@ IdentifierPart rule above.
 Identifier
   : IdentifierNameASCIIStart
   | { consumeIdentifierUnicodeStart(); }
-  //| 'xml'
 ;
-
-//ID
-//  : IdentifierNameASCIIStart
-//  | { consumeIdentifierUnicodeStart(); }
-//;
-//
-//Identifier
-//  : ID
-//// keywords as identifiers
-//  | WXML
-//  | GET
-//  | SET
-//  ;
-
-
-
+identifier
+  : WXML
+  | GET
+  | SET
+  | EACH
+  | NAMESPACE
+  | Identifier
+;
 
 fragment PropertyIdentifierSymbols
   : AT Identifier
@@ -956,7 +974,7 @@ RegularExpressionLiteral
 
 primaryExpression
 	: THIS
-	| Identifier
+	| identifier
 	| XmlAttribute
 	| literal
 	| arrayLiteral
@@ -995,7 +1013,7 @@ nameValuePair
 	;
 
 propertyName
-	: Identifier
+	: identifier
 	| StringLiteral
 	| numericLiteral
 	| XmlAttribute
@@ -1017,7 +1035,7 @@ memberExpression
 	;
 
 newExpression
-	: NEW^ primaryExpression
+	: NEW^ memberExpression
 	;
 
 	
@@ -1042,7 +1060,7 @@ leftHandSideExpression
 
 rightHandSideExpression
   : parenExpression 
-  | Identifier
+  | identifier
   | XmlAttribute
   | MUL
 ; 
@@ -1134,7 +1152,8 @@ unaryOperator
 // $>
 
 namespaceStatement
-  : DEFAULT WXML NAMESPACE^ ASSIGN StringLiteral semic!
+  : DEFAULT WXML NAMESPACE ASSIGN StringLiteral semic
+    -> ^(DEFAULT_XML_NAMESPACE DEFAULT WXML ASSIGN StringLiteral)
   ;
 
 // $<Multiplicative operators (11.5)
@@ -1392,11 +1411,11 @@ variableStatement
 	;
 
 variableDeclaration
-	: Identifier ( ASSIGN^ assignmentExpression )?
+	: identifier ( ASSIGN^ assignmentExpression )?
 	;
 	
 variableDeclarationNoIn
-	: Identifier ( ASSIGN^ assignmentExpressionNoIn )?
+	: identifier ( ASSIGN^ assignmentExpressionNoIn )?
 	;
 
 constStatement
@@ -1499,7 +1518,8 @@ Furthermore backtracking seemed to have 3 major drawbacks:
 */
 
 forEachStatement
-  : FOR! EACH^ LPAREN! forEachControl RPAREN! statement
+  : FOR EACH LPAREN forEachControl RPAREN statement 
+  	-> ^(FOREACH forEachControl statement)
   ;
 
 forEachControl
@@ -1637,8 +1657,8 @@ defaultClause
 // $<Labelled statements (12.12)
 
 labelledStatement
-	: Identifier COLON statement
-	-> ^( LABELLED Identifier statement )
+	: identifier COLON statement
+	-> ^( LABELLED identifier statement )
 	;
 
 // $>
@@ -1673,7 +1693,7 @@ tryStatement
 	;
 	
 catchClause
-	: CATCH^ LPAREN! Identifier catchFilter? RPAREN! block
+	: CATCH^ LPAREN! identifier catchFilter? RPAREN! block
 	;
 	
 catchFilter
@@ -1681,7 +1701,7 @@ catchFilter
   ;
 	
 instanceofExpression
-  : Identifier INSTANCEOF^ Identifier	
+  : identifier INSTANCEOF^ identifier	
 	;
 	
 finallyClause
@@ -1699,17 +1719,17 @@ finallyClause
 // $<	Function Definition (13)
 
 functionDeclaration
-	: FUNCTION name=Identifier formalParameterList functionBody
+	: FUNCTION name=identifier formalParameterList functionBody
 	-> ^( FUNCTION $name formalParameterList functionBody )
 	;
 
 functionExpression
-	: FUNCTION name=Identifier? formalParameterList functionBody
+	: FUNCTION name=identifier? formalParameterList functionBody
 	-> ^( FUNCTION $name? formalParameterList functionBody )
 	;
 
 formalParameterList
-	: LPAREN ( args+=Identifier ( COMMA args+=Identifier )* )? RPAREN
+	: LPAREN ( args+=identifier ( COMMA args+=identifier )* )? RPAREN
 	-> ^( ARGS $args* )
 	;
 
@@ -1724,11 +1744,13 @@ functionBody
 // $< get/set methods
 
 getMethodDeclaration
-  : GET^ name=Identifier LPAREN! RPAREN! functionBody
+  : GET name=identifier LPAREN RPAREN functionBody
+  	-> ^(GETTER identifier functionBody)
   ;
   
 setMethodDeclaration
-  : SET^ name=Identifier LPAREN! Identifier RPAREN! functionBody
+  : SET name=identifier LPAREN param=identifier RPAREN functionBody
+    -> ^(SETTER $name $param functionBody)
   ;
 
 // $>	

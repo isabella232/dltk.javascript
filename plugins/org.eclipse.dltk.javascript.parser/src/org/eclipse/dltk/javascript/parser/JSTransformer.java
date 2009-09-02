@@ -889,6 +889,10 @@ public class JSTransformer extends JSVisitor {
 				operationType = JSParser.DEC;
 				break;
 
+			case JSParser.POS:
+				operationType = JSParser.ADD;
+				break;
+
 			case JSParser.NEG:
 				operationType = JSParser.SUB;
 				break;
@@ -1376,7 +1380,7 @@ public class JSTransformer extends JSVisitor {
 		newKeyword.setEnd(getTokenOffset(node.getTokenStartIndex() + 1));
 		expression.setNewKeyword(newKeyword);
 
-		expression.setObjectClass((Identifier) transformNode(node.getChild(0),
+		expression.setObjectClass((Expression) transformNode(node.getChild(0),
 				expression));
 
 		expression.setStart(getTokenOffset(node.getTokenStartIndex()));
