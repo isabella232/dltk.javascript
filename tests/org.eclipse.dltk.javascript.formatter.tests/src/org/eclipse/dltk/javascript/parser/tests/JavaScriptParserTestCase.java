@@ -17,6 +17,7 @@ import junit.framework.TestCase;
 import org.eclipse.dltk.javascript.internal.parser.tests.FormatterPreviewTester;
 import org.eclipse.dltk.javascript.internal.parser.tests.JavaScriptParserTester;
 
+@SuppressWarnings("nls")
 public class JavaScriptParserTestCase extends TestCase {
 
 	public void testFunctionParse() throws Exception {
@@ -137,6 +138,14 @@ public class JavaScriptParserTestCase extends TestCase {
 
 	public void testE4XParse() throws Exception {
 		JavaScriptParserTester.parse("e4x.js", "UTF-8");
+	}
+
+	public void testXmlNamespace() throws Exception {
+		JavaScriptParserTester.parse("e4x-xml-namespace.js");
+	}
+
+	public void testXmlVar() throws Exception {
+		JavaScriptParserTester.parse("e4x-xml-var.js");
 	}
 
 	public void testE4XSimpleParse() throws Exception {
