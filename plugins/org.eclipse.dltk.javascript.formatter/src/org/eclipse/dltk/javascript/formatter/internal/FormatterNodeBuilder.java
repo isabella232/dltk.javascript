@@ -501,7 +501,7 @@ public class FormatterNodeBuilder extends AbstractFormatterNodeBuilder {
 
 				visit(node.getExpression());
 
-				processOptionalSemicolon(formatterNode, node);
+				checkedPop(formatterNode, node.getExpression().sourceEnd());
 				return true;
 			}
 

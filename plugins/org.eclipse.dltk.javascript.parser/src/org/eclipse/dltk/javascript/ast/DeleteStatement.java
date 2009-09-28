@@ -16,11 +16,10 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.dltk.ast.ASTNode;
 import org.eclipse.dltk.javascript.formatter.internal.nodes.JSLiterals;
 
-public class DeleteStatement extends Statement implements ISemicolonStatement {
+public class DeleteStatement extends Expression {
 
 	private Keyword deleteKeyword;
 	private Expression expression;
-	private int semic = -1;
 
 	public DeleteStatement(ASTNode parent) {
 		super(parent);
@@ -42,14 +41,6 @@ public class DeleteStatement extends Statement implements ISemicolonStatement {
 		this.deleteKeyword = keyword;
 	}
 
-	public int getSemicolonPosition() {
-		return this.semic;
-	}
-
-	public void setSemicolonPosition(int semic) {
-		this.semic = semic;
-	}
-
 	@Override
 	public String toSourceString(String indentationString) {
 
@@ -62,8 +53,6 @@ public class DeleteStatement extends Statement implements ISemicolonStatement {
 		buffer.append(Keywords.DELETE);
 		buffer.append(JSLiterals.SPACE);
 		buffer.append(expression.toSourceString(indentationString));
-		if (semic > 0)
-			buffer.append(JSLiterals.SEMICOLON);
 		buffer.append(JSLiterals.EOL);
 
 		return buffer.toString();
