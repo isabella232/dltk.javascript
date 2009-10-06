@@ -22,7 +22,6 @@ public class JavaScriptBuildPathPropertyPage extends BuildPathsPropertyPage
 	public JavaScriptBuildPathPropertyPage() {
 	}
 
-	@Override
 	protected BuildpathsBlock createBuildPathBlock(
 			IWorkbenchPreferenceContainer pageContainer) {
 		return new JavascriptBuildPathsBlock(

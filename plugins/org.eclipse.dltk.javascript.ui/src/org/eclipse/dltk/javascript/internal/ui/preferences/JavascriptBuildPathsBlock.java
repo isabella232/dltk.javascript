@@ -21,7 +21,6 @@ public class JavascriptBuildPathsBlock extends BuildpathsBlock {
 		super(runnableContext, context, pageToShow, useNewPage, pageContainer);
 	}
 
-	@Override
 	protected boolean supportZips() {
 		return true;
 	}
