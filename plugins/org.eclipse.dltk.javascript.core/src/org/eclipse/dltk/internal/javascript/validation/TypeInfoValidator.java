@@ -1240,9 +1240,9 @@ public class TypeInfoValidator implements IBuildParticipant,
 		private static final boolean EXPERIMENTAL = false;
 
 		private boolean isArrayLookup(ASTNode expression) {
-			if (EXPERIMENTAL && expression instanceof GetArrayItemExpression)
+			if (expression instanceof GetArrayItemExpression)
 				return true;
-			if (EXPERIMENTAL && expression instanceof PropertyExpression) {
+			if (expression instanceof PropertyExpression) {
 				return isArrayLookup(((PropertyExpression) expression)
 						.getObject());
 			}
