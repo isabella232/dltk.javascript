@@ -8,22 +8,6 @@
     <initializer class="org.eclipse.dltk.javascript.internal.debug.ui.JavaScriptDebugUIPreferenceInitializer" />
   </extension>
   
-  <extension point="org.eclipse.ui.viewActions">
-    <viewContribution
-      targetID="org.eclipse.debug.ui.VariableView"
-      id="org.eclipse.dltk.javascript.debug.ui.VariableViewActions">
-      <action
-        style="toggle"
-        id="org.eclipse.dltk.javascript.debug.ui.variableViewActions.ShowStatic"
-            class="org.eclipse.dltk.javascript.internal.console.ui.actions.ShowFunctionsAction"
-            helpContextId="show_functions_context"
-            icon="icons/javascript.gif"
-            label="%showFunctionsAction.label"
-            menubarPath="org.eclipse.dltk.javascript.debug.ui.menu.VariableView/js"
-            tooltip="%showFunctionsAction.tooltip">
-      </action>
-    </viewContribution>
-  </extension>
   
   <extension point="org.eclipse.dltk.ui.editorTextHovers">
     <hover
@@ -376,10 +360,6 @@
       id="org.eclipse.dltk.javascript.debug.ui.commands.toggleGlobalVariables"
       description="%showGlobalVarsCommand.name"
       name="%showGlobalVarsCommand.description" />
-    <command
-      id="org.eclipse.dltk.javascript.debug.ui.commands.toggleClassVariables"
-      description="%showClassVarsCommand.name"
-      name="%showClassVarsCommand.description" />
     <command
       id="org.eclipse.dltk.javascript.debug.ui.commands.toggleLocalVariables"
       description="%showLocalVarsCommand.name"
