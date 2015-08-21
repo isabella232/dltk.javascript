@@ -10,7 +10,9 @@
   </parent>
   <artifactId>org.eclipse.dltk.javascript.ui.tests</artifactId>
   <packaging>eclipse-test-plugin</packaging>
-
+  <properties>
+    <ui.test.vmargs></ui.test.vmargs>
+  </properties>
   <profiles>
 	  <profile>
 		  <id>macosx</id>
@@ -24,18 +26,6 @@
 			  <ui.test.vmargs>-XstartOnFirstThread</ui.test.vmargs>
 		  </properties>
 	  </profile>
-	  <profile>
-         <id>not-macosx</id>
-		 <activation>
-			 <os>
-				 <name>not-mac</name>
-				 <family>!mac</family>
-			 </os>
-		 </activation>
-		 <properties>
-			 <ui.test.vmargs></ui.test.vmargs>
-		 </properties>
-	 </profile>
  </profiles>
 
   <build>
