@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Script JDT Integration Plug-in
+Bundle-Vendor: Eclipse DLTK
 Bundle-SymbolicName: org.eclipse.dltk.javascript.jdt.integration;singleton:=true
 Bundle-Version: 5.5.0.qualifier
 Bundle-Activator: org.eclipse.dltk.javascript.jdt.integration.Activator
