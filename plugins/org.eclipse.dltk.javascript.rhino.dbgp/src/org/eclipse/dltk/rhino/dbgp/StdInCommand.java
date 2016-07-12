@@ -20,7 +20,7 @@ final class StdInCommand extends DBGPDebugger.Command {
 
 	@Override
 	void parseAndExecute(String command, HashMap options) {
-		this.debugger.printResponse("<response command=\"srdin\"\r\n"
+		this.debugger.printResponse("<response command=\"stdin\"\r\n"
 				+ "          success=\"1\"\r\n" + "          transaction_id=\""
 				+ options.get("-i") + "\">\r\n" + "</response>\r\n" + "");
 	}
