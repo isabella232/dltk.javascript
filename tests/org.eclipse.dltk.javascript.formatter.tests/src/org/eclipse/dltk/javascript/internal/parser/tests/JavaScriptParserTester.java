@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 xored software, Inc.  
+ * Copyright (c) 2009, 2016 xored software, Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,14 +12,13 @@
 
 package org.eclipse.dltk.javascript.internal.parser.tests;
 
-import junit.framework.Assert;
-
 import org.eclipse.dltk.javascript.formatter.JavaScriptFormatter;
 import org.eclipse.dltk.javascript.formatter.JavaScriptFormatterConstants;
 import org.eclipse.dltk.javascript.formatter.tests.JavaScriptFormatterTestsPlugin;
 import org.eclipse.dltk.ui.formatter.IScriptFormatter;
 import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.TextEdit;
+import org.junit.Assert;
 
 public class JavaScriptParserTester extends AbstractTester {
 
@@ -58,8 +57,8 @@ public class JavaScriptParserTester extends AbstractTester {
 
 	public static void parse(String resourceName, String charset)
 			throws Exception {
-		new JavaScriptParserTester().parseScript(getScriptContent(resourceName,
-				charset));
+		new JavaScriptParserTester()
+				.parseScript(getScriptContent(resourceName, charset));
 	}
 
 	public static void parseSource(String source) throws Exception {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 xored software, Inc.  
+ * Copyright (c) 2009, 2016 xored software, Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,16 +14,14 @@ package org.eclipse.dltk.javascript.internal.parser.tests;
 import java.io.IOException;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.antlr.runtime.Token;
 import org.eclipse.dltk.compiler.env.ModuleSource;
-import org.eclipse.dltk.compiler.problem.IProblem;
 import org.eclipse.dltk.compiler.problem.IProblemReporter;
 import org.eclipse.dltk.javascript.ast.Script;
 import org.eclipse.dltk.javascript.formatter.tests.JavaScriptFormatterTestsPlugin;
 import org.eclipse.dltk.javascript.parser.JSTokenStream;
 import org.eclipse.dltk.javascript.parser.JavaScriptParser;
+import org.junit.Assert;
 
 public class JavaScriptTokenStreamTester extends AbstractTester {
 
@@ -60,19 +58,9 @@ public class JavaScriptTokenStreamTester extends AbstractTester {
 		JavaScriptParser parser = new JavaScriptParser();
 
 		Script root = parser.parse(new ModuleSource(source),
-				new IProblemReporter() {
-
-					public void reportProblem(IProblem problem) {
-						System.out.println("Parser "
-								+ (problem.isError() ? "error" : "warning")
-								+ ": " + problem.getMessage());
-					}
-
-					public Object getAdapter(
-							@SuppressWarnings("rawtypes") Class adapter) {
-						return null;
-					}
-				});
+				(IProblemReporter) problem -> System.out.println("Parser "
+						+ (problem.isError() ? "error" : "warning")
+						+ ": " + problem.getMessage()));
 
 		Assert.assertNotNull(root);
 

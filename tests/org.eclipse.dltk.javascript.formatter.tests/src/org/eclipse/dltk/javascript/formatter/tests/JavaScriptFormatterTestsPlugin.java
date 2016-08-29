@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 xored software, Inc.  
+ * Copyright (c) 2009, 2016 xored software, Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -85,21 +85,23 @@ public class JavaScriptFormatterTestsPlugin extends Plugin {
 
 	public static final IScriptedTestContext CONTEXT = new IScriptedTestContext() {
 
+		@Override
 		public Bundle getResourceBundle() {
 			return getDefault().getBundle();
 		}
 
+		@Override
 		public String getCharset() {
 			return "ISO-8859-1"; //$NON-NLS-1$
 		}
 
+		@Override
 		public IScriptFormatter createFormatter(Map<String, Object> preferences) {
 			final Map<String, Object> prefs = JavaScriptFormatterConstants
 					.getDefaults();
-			prefs
-					.put(
-							JavaScriptFormatterConstants.INSERT_SPACE_BEFORE_LP_FUNCTION_ARGUMENTS,
-							true);
+			prefs.put(
+					JavaScriptFormatterConstants.INSERT_SPACE_BEFORE_LP_FUNCTION_ARGUMENTS,
+					true);
 			prefs.put(JavaScriptFormatterConstants.INDENT_SWITCH, true);
 			if (preferences != null) {
 				prefs.putAll(preferences);
@@ -107,6 +109,7 @@ public class JavaScriptFormatterTestsPlugin extends Plugin {
 			return new TestJavaScriptFormatter(Util.LINE_SEPARATOR, prefs);
 		}
 
+		@Override
 		public String validateOptionName(String name) {
 			if (JavaScriptFormatterConstants.isDefined(name))
 				return name;
@@ -114,6 +117,7 @@ public class JavaScriptFormatterTestsPlugin extends Plugin {
 			return null;
 		}
 
+		@Override
 		public String validateOptionValue(String name, String value) {
 			if (!JavaScriptFormatterConstants.isDefined(name))
 				return null;

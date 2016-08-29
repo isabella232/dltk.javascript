@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 xored software, Inc.  
+ * Copyright (c) 2009, 2016 xored software, Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,12 +14,11 @@ package org.eclipse.dltk.javascript.internal.parser.tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.antlr.runtime.Token;
 import org.eclipse.dltk.javascript.parser.JSParser;
 import org.eclipse.dltk.javascript.parser.JSTokenStream;
 import org.eclipse.dltk.javascript.parser.JavaScriptParser;
+import org.junit.Assert;
 
 public class ANTLRTokenStreamComparer {
 
@@ -72,14 +71,14 @@ public class ANTLRTokenStreamComparer {
 		for (int i = 0; i < Math.max(sourceComments.size(),
 				targetComments.size()); i++) {
 
-			System.out
-					.println("==============================================================");
-			System.out.println(i < sourceComments.size() ? sourceComments
-					.get(i) : "!!! MISSED !!!");
-			System.out
-					.println("--------------------------------------------------------------");
-			System.out.println(i < targetComments.size() ? targetComments
-					.get(i) : "!!! MISSED !!!");
+			System.out.println(
+					"==============================================================");
+			System.out.println(i < sourceComments.size() ? sourceComments.get(i)
+					: "!!! MISSED !!!");
+			System.out.println(
+					"--------------------------------------------------------------");
+			System.out.println(i < targetComments.size() ? targetComments.get(i)
+					: "!!! MISSED !!!");
 
 		}
 		System.out

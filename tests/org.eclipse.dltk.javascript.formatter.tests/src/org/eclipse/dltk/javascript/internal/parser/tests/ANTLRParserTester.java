@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 xored software, Inc.  
+ * Copyright (c) 2009, 2016 xored software, Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.Token;
 import org.eclipse.dltk.compiler.env.ModuleSource;
@@ -29,6 +27,7 @@ import org.eclipse.dltk.javascript.parser.JSTokenStream;
 import org.eclipse.dltk.javascript.parser.JSTransformer;
 import org.eclipse.dltk.javascript.parser.JavaScriptParser;
 import org.eclipse.dltk.javascript.parser.tests.ASTVerifier;
+import org.junit.Assert;
 
 @SuppressWarnings("nls")
 public class ANTLRParserTester {

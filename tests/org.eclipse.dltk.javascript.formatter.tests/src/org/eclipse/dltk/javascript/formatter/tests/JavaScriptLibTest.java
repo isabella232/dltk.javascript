@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 xored software, Inc.  
+ * Copyright (c) 2009, 2016 xored software, Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -38,6 +37,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
+import org.junit.Assert;
 
 public class JavaScriptLibTest extends AbstractFormatterTest {
 
@@ -56,6 +56,7 @@ public class JavaScriptLibTest extends AbstractFormatterTest {
 					.getName());
 			suite.addTest(new TestCase("testJavaScriptLib-NOT-FOUND") {
 
+				@Override
 				protected void runTest() throws Throwable {
 					System.out.println(FILENAME + " not found");
 				}
@@ -65,9 +66,10 @@ public class JavaScriptLibTest extends AbstractFormatterTest {
 		}
 	}
 
-	protected IScriptFormatter createFormatter(Map preferences) {
-		return preferences != null ? new TestJavaScriptFormatter(
-				Util.LINE_SEPARATOR, preferences)
+	@Override
+	protected IScriptFormatter createFormatter(Map<String, Object> preferences) {
+		return preferences != null
+				? new TestJavaScriptFormatter(Util.LINE_SEPARATOR, preferences)
 				: new TestJavaScriptFormatter();
 	}
 
@@ -87,14 +89,14 @@ public class JavaScriptLibTest extends AbstractFormatterTest {
 		if (!path.isFile()) {
 			fail(path + " is not found"); //$NON-NLS-1$
 		}
-		final ZipInputStream zipInputStream = new ZipInputStream(
-				new FileInputStream(path));
-		try {
+		try (final ZipInputStream zipInputStream = new ZipInputStream(
+				new FileInputStream(path))) {
 			ZipEntry entry;
 			while ((entry = zipInputStream.getNextEntry()) != null) {
 				if (!entry.isDirectory() && isJavaScriptFile(entry.getName())) {
 					final InputStream entryStream = new FilterInputStream(
 							zipInputStream) {
+						@Override
 						public void close() throws IOException {
 							// empty
 						}
@@ -133,12 +135,6 @@ public class JavaScriptLibTest extends AbstractFormatterTest {
 
 					zipInputStream.closeEntry();
 				}
-			}
-		} finally {
-			try {
-				zipInputStream.close();
-			} catch (IOException e) {
-				//
 			}
 		}
 		if (errorCount > 0) {
