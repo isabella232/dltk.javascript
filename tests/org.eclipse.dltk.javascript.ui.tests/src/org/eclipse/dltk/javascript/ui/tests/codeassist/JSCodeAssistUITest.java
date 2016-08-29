@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 NumberFour AG
+ * Copyright (c) 2012, 2016 NumberFour AG and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -54,21 +54,16 @@ public class JSCodeAssistUITest extends Assert {
 			List<ICompletionProposal> proposals, Class<T> proposalClass,
 			Predicate<T> predicate) {
 		return FluentIterable.from(proposals).filter(proposalClass)
-				.filter(predicate).toImmutableList();
+				.filter(predicate).toList();
 	}
 
 	private List<ScriptTemplateProposal> filterProposalsWithJSDoc(
 			final List<ICompletionProposal> proposals) {
 		return filter(proposals, ScriptTemplateProposal.class,
-				new Predicate<ScriptTemplateProposal>() {
-					public boolean apply(ScriptTemplateProposal input) {
-						return input.getAdditionalProposalInfo().contains(
-								MultiLineComment.JSDOC_PREFIX);
-					}
-				});
+				input -> input.getAdditionalProposalInfo()
+						.contains(MultiLineComment.JSDOC_PREFIX));
 	}
 
-	@SuppressWarnings("unchecked")
 	private static Matcher<String> stringHasValue() {
 		return CoreMatchers.allOf(CoreMatchers.<String> notNullValue(String.class),
 				CoreMatchers.not(""));
@@ -88,12 +83,7 @@ public class JSCodeAssistUITest extends Assert {
 		// function keyword
 		final List<IScriptCompletionProposal> keywords = filter(proposals,
 				IScriptCompletionProposal.class,
-				new Predicate<IScriptCompletionProposal>() {
-					public boolean apply(IScriptCompletionProposal input) {
-						return Keywords.FUNCTION.equals(input
-								.getDisplayString());
-					}
-				});
+				input -> Keywords.FUNCTION.equals(input.getDisplayString()));
 		assertEquals(1, keywords.size());
 
 		// 2 function declaration templates (with jsdoc and without it)
@@ -123,12 +113,7 @@ public class JSCodeAssistUITest extends Assert {
 
 		final List<IScriptCompletionProposal> keywords = filter(proposals,
 				IScriptCompletionProposal.class,
-				new Predicate<IScriptCompletionProposal>() {
-					public boolean apply(IScriptCompletionProposal input) {
-						return Keywords.FUNCTION.equals(input
-								.getDisplayString());
-					}
-				});
+				input -> Keywords.FUNCTION.equals(input.getDisplayString()));
 		assertEquals(1, keywords.size());
 		util.apply(keywords.get(0));
 		assertEquals(PROJECT.getFileContentsAsString("src/file1keyword.txt"),
@@ -192,11 +177,7 @@ public class JSCodeAssistUITest extends Assert {
 
 		final List<IScriptCompletionProposal> proposals = filter(
 				util.invokeCompletion(), IScriptCompletionProposal.class,
-				new Predicate<IScriptCompletionProposal>() {
-					public boolean apply(IScriptCompletionProposal input) {
-						return input.getDisplayString().startsWith("length");
-					}
-				});
+				input -> input.getDisplayString().startsWith("length"));
 		assertEquals(1, proposals.size());
 		assertThat(proposals.get(0).getAdditionalProposalInfo(),
 				stringHasValue());
@@ -211,11 +192,7 @@ public class JSCodeAssistUITest extends Assert {
 
 		final List<IScriptCompletionProposal> proposals = filter(
 				util.invokeCompletion(), IScriptCompletionProposal.class,
-				new Predicate<IScriptCompletionProposal>() {
-					public boolean apply(IScriptCompletionProposal input) {
-						return input.getDisplayString().startsWith("toString");
-					}
-				});
+				input -> input.getDisplayString().startsWith("toString"));
 		assertEquals(1, proposals.size());
 		assertThat(proposals.get(0).getAdditionalProposalInfo(),
 				stringHasValue());
