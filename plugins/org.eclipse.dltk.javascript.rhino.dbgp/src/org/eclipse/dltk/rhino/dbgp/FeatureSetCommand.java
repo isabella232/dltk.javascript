@@ -1,15 +1,13 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
 import java.util.HashMap;
 
-import org.eclipse.dltk.rhino.dbgp.DBGPDebugger.Command;
-
 final class FeatureSetCommand extends DBGPDebugger.Command {
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -20,11 +18,11 @@ final class FeatureSetCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, HashMap options) {
 		this.debugger.printResponse("<response command=\"feature_set\"\r\n"
 				+ "          feature_name=\"max_children\"\r\n"
-				+ "          success=\"1\"\r\n"
-				+ "          transaction_id=\"" + options.get("-i")
-				+ "\">\r\n" + "</response>\r\n" + "");
+				+ "          success=\"1\"\r\n" + "          transaction_id=\""
+				+ options.get("-i") + "\">\r\n" + "</response>\r\n" + "");
 	}
 }

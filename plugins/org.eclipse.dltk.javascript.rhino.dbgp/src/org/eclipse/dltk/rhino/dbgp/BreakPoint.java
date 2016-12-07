@@ -83,7 +83,8 @@ public class BreakPoint {
 				expression = expression.trim();
 		}
 		if (isWatch) {
-			this.isModification = expression.charAt(expression.length() - 1) == '1';
+			this.isModification = expression
+					.charAt(expression.length() - 1) == '1';
 			this.isAccess = expression.charAt(expression.length() - 2) == '1';
 			this.expression = expression.substring(0, expression.length() - 2);
 
@@ -106,6 +107,7 @@ public class BreakPoint {
 		}
 	}
 
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -114,6 +116,7 @@ public class BreakPoint {
 		return result;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

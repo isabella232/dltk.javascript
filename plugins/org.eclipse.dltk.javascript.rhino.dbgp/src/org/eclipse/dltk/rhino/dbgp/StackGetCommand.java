@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 final class StackGetCommand extends DBGPDebugger.Command {
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -19,6 +19,7 @@ final class StackGetCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, final HashMap options) {
 		String string = (String) options.get("-d");
 		int level = -1;
@@ -28,7 +29,8 @@ final class StackGetCommand extends DBGPDebugger.Command {
 		StringBuffer stack = new StringBuffer();
 		if (this.debugger.stackmanager.getStackDepth() >= level) {
 			if (level == -1) {
-				for (int a = 0; a < this.debugger.stackmanager.getStackDepth(); a++) {
+				for (int a = 0; a < this.debugger.stackmanager
+						.getStackDepth(); a++) {
 					appendLevel(a, stack);
 				}
 			} else {
@@ -36,8 +38,8 @@ final class StackGetCommand extends DBGPDebugger.Command {
 				appendLevel(level, stack);
 			}
 			this.debugger.printResponse("<response command=\"stack_get\"\r\n"
-					+ "\r\n" + "          transaction_id=\""
-					+ options.get("-i") + "\">\r\n" +
+					+ "\r\n" + "          transaction_id=\"" + options.get("-i")
+					+ "\">\r\n" +
 
 					stack + "</response>\r\n" + "");
 		}

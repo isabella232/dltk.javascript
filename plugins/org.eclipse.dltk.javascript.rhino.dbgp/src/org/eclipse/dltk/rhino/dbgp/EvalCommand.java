@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 final class EvalCommand extends DBGPDebugger.Command {
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -18,6 +18,7 @@ final class EvalCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, HashMap options) {
 		String value = Base64Helper.decodeString((String) options.get("--"));
 		if (value.length() == 0)
@@ -25,10 +26,10 @@ final class EvalCommand extends DBGPDebugger.Command {
 		StringBuffer valueBuffer = new StringBuffer();
 		if (this.debugger.stackmanager.getStackDepth() == 0 || value == null) {
 			this.debugger.printProperty(value, value, "", valueBuffer, 0, true);
-			this.debugger.printResponse("<response command=\"eval\"\r\n"
-					+ " transaction_id=\"" + options.get("-i")
-					+ "\" success=\"1\" " + ">\r\n" + valueBuffer
-					+ "</response>\r\n" + "");
+			this.debugger.printResponse(
+					"<response command=\"eval\"\r\n" + " transaction_id=\""
+							+ options.get("-i") + "\" success=\"1\" " + ">\r\n"
+							+ valueBuffer + "</response>\r\n" + "");
 			return;
 		}
 		Object evaluated = "<error evaluating>";
@@ -46,8 +47,7 @@ final class EvalCommand extends DBGPDebugger.Command {
 		this.debugger.printProperty(shName, value, evaluated, valueBuffer, 0,
 				true);
 		this.debugger.printResponse("<response command=\"eval\"\r\n"
-				+ " transaction_id=\"" + options.get("-i")
-				+ "\" success=\"1\" " + ">\r\n" + valueBuffer
-				+ "</response>\r\n" + "");
+				+ " transaction_id=\"" + options.get("-i") + "\" success=\"1\" "
+				+ ">\r\n" + valueBuffer + "</response>\r\n" + "");
 	}
 }

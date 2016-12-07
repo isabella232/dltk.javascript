@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
@@ -16,7 +16,7 @@ final class ContextGetCommand extends DBGPDebugger.Command {
 	private static final int GLOBAL_CONTEXT_ID = 1;
 	private static final int CLASS_CONTEXT_ID = 2;
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -27,6 +27,7 @@ final class ContextGetCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, HashMap options) {
 		StringBuffer properties = new StringBuffer();
 		try {
@@ -39,7 +40,8 @@ final class ContextGetCommand extends DBGPDebugger.Command {
 			DBGPDebugFrame stackFrame = this.debugger.stackmanager
 					.getStackFrame(level);
 			Scriptable this1 = stackFrame.getThis();
-			if (this1 != null && (context == LOCAL_CONTEXT_ID || context == -1)) {
+			if (this1 != null
+					&& (context == LOCAL_CONTEXT_ID || context == -1)) {
 				this.debugger.printProperty("this", "this", this1, properties,
 						0, false);
 			}
@@ -120,8 +122,8 @@ final class ContextGetCommand extends DBGPDebugger.Command {
 														// of the lazy behavior
 														// of plugins in Eclipse
 					{
-						this.debugger.printProperty(id.toString(), id
-								.toString(), value, properties, 0, true);
+						this.debugger.printProperty(id.toString(),
+								id.toString(), value, properties, 0, true);
 					}
 				}
 			}

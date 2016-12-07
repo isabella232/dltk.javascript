@@ -52,6 +52,7 @@ public final class DBGPDebugFrame implements DebugFrame {
 		return result;
 	}
 
+	@Override
 	public void onEnter(Context cx, Scriptable activation, Scriptable thisObj,
 			Object[] args) {
 		this.args = args;
@@ -62,15 +63,18 @@ public final class DBGPDebugFrame implements DebugFrame {
 
 	}
 
+	@Override
 	public void onExceptionThrown(Context cx, Throwable ex) {
 		stackManager.exceptionThrown(ex);
 	}
 
+	@Override
 	public void onExit(Context cx, boolean byThrow, Object resultOrException) {
 
 		stackManager.exit(this);
 	}
 
+	@Override
 	public void onLineChange(Context cx, int lineNumber) {
 		this.lineNumber = lineNumber;
 		if (callOnEnter) {
@@ -130,8 +134,8 @@ public final class DBGPDebugFrame implements DebugFrame {
 				value = value.substring("this.".length());
 				cs = thisObj;
 			}
-			Object evaluateString = context.evaluateString(cs, value, "eval",
-					0, null);
+			Object evaluateString = context.evaluateString(cs, value, "eval", 0,
+					null);
 			return evaluateString;
 
 		} catch (Throwable e) {

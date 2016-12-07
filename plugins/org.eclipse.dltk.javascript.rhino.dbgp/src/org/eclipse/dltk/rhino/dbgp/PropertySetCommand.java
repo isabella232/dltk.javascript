@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 final class PropertySetCommand extends DBGPDebugger.Command {
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -18,6 +18,7 @@ final class PropertySetCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, HashMap options) {
 		String name = ((String) options.get("-n"));
 		int num = Integer.parseInt((String) options.get("-d"));
@@ -37,7 +38,7 @@ final class PropertySetCommand extends DBGPDebugger.Command {
 			debugger.setProperty(name, value);
 		}
 		this.debugger.printResponse("<response command=\"property_set\"\r\n"
-				+ " transaction_id=\"" + options.get("-i")
-				+ "\" success=\"1\" " + ">\r\n" + "</response>\r\n" + "");
+				+ " transaction_id=\"" + options.get("-i") + "\" success=\"1\" "
+				+ ">\r\n" + "</response>\r\n" + "");
 	}
 }

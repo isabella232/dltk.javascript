@@ -1,15 +1,13 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
 import java.util.HashMap;
 
-import org.eclipse.dltk.rhino.dbgp.DBGPDebugger.Command;
-
 final class StepOutCommand extends DBGPDebugger.Command {
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -20,6 +18,7 @@ final class StepOutCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, HashMap options) {
 		Object tid = options.get("-i");
 		this.debugger.runTransctionId = (String) tid;

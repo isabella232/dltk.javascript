@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.dltk.rhino.dbgp;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 final class SetBreakPointCommand extends DBGPDebugger.Command {
 	/**
-	 * 
+	 *
 	 */
 	private final DBGPDebugger debugger;
 
@@ -18,6 +18,7 @@ final class SetBreakPointCommand extends DBGPDebugger.Command {
 		this.debugger = debugger;
 	}
 
+	@Override
 	void parseAndExecute(String command, HashMap options) {
 		BreakPoint p = new BreakPoint(options);
 		this.debugger.stackmanager.registerBreakPoint(p);

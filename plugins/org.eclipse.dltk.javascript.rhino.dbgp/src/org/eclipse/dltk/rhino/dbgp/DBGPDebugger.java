@@ -30,8 +30,8 @@ import org.mozilla.javascript.debug.Debugger;
 import org.mozilla.javascript.debug.IDeguggerWithWatchPoints;
 import org.mozilla.javascript.xml.XMLObject;
 
-public class DBGPDebugger extends Thread implements Debugger, Observer,
-		IDeguggerWithWatchPoints {
+public class DBGPDebugger extends Thread
+		implements Debugger, Observer, IDeguggerWithWatchPoints {
 
 	private Socket socket;
 	private OutputStream out;
@@ -203,8 +203,8 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 						Object pvalue = null;
 						try {
 							if (ids[a] instanceof Integer) {
-								pvalue = p
-										.get(((Integer) ids[a]).intValue(), p);
+								pvalue = p.get(((Integer) ids[a]).intValue(),
+										p);
 							} else
 								pvalue = p.get(ids[a].toString(), p);
 						} catch (Exception e) {
@@ -230,8 +230,8 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 				if (value == UniqueTag.NOT_FOUND) {
 					vlEncoded = "";
 				} else
-					vlEncoded = Base64Helper.encodeString(value != null ? value
-							.toString() : "null");
+					vlEncoded = Base64Helper.encodeString(
+							value != null ? value.toString() : "null");
 			} else {
 				vlEncoded = Base64Helper.encodeString("Undefined");
 			}
@@ -317,8 +317,9 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 			{
 				counter++;
 				if (ids[a] instanceof Integer) {
-					printProperty(ids[a].toString(), fullName + "[" + ids[a]
-							+ "]", pvalue, stringBuffer, level + 1, false);
+					printProperty(ids[a].toString(),
+							fullName + "[" + ids[a] + "]", pvalue, stringBuffer,
+							level + 1, false);
 				} else {
 					printProperty(ids[a].toString(), fullName + "." + ids[a],
 							pvalue, stringBuffer, level + 1, false);
@@ -356,6 +357,7 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 		return data_type;
 	}
 
+	@Override
 	public void run() {
 		try {
 			DataInputStream ds = new DataInputStream(socket.getInputStream());
@@ -404,14 +406,17 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 
 	}
 
+	@Override
 	public DebugFrame getFrame(Context cx, DebuggableScript fnOrScript) {
 		return new DBGPDebugFrame(cx, fnOrScript, this);
 	}
 
+	@Override
 	public void handleCompilationDone(Context cx, DebuggableScript fnOrScript,
 			String source) {
 	}
 
+	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (runTransctionId != null)
 			printResponse("<response command=\"run\"\r\n" + "status=\"break\""
@@ -426,9 +431,10 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 		System.exit(0);
 	}
 
+	@Override
 	public void access(String property, ScriptableObject object) {
-		ArrayList list = (ArrayList) stackmanager.getManager().getWatchPoints(
-				property);
+		ArrayList list = (ArrayList) stackmanager.getManager()
+				.getWatchPoints(property);
 		if (list != null) {
 			int size = list.size();
 
@@ -451,10 +457,11 @@ public class DBGPDebugger extends Thread implements Debugger, Observer,
 
 	WeakHashMap cache = new WeakHashMap();
 
+	@Override
 	public void modification(String property, ScriptableObject object) {
 
-		ArrayList list = (ArrayList) stackmanager.getManager().getWatchPoints(
-				property);
+		ArrayList list = (ArrayList) stackmanager.getManager()
+				.getWatchPoints(property);
 		if (list != null && stackmanager.getStackDepth() > 0) {
 			int size = list.size();
 			for (int a = 0; a < size; a++) {
