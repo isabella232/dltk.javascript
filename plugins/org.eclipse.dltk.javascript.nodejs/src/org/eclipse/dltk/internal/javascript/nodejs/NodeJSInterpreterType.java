@@ -31,10 +31,12 @@ import org.osgi.framework.FrameworkUtil;
 
 public class NodeJSInterpreterType extends AbstractInterpreterInstallType {
 
+	@Override
 	public String getName() {
 		return "node.js";
 	}
 
+	@Override
 	public String getNatureId() {
 		return JavaScriptNature.NATURE_ID;
 	}
@@ -79,6 +81,7 @@ public class NodeJSInterpreterType extends AbstractInterpreterInstallType {
 			List<LibraryLocation> locations, EnvironmentVariable[] variables) {
 		// TODO refactor DLTK to avoid this empty override
 		return new ILookupRunnable() {
+			@Override
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
 			}
