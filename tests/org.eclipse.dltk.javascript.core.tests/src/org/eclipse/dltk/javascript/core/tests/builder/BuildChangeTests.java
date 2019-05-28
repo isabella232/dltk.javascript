@@ -43,7 +43,7 @@ public class BuildChangeTests extends AbstractModelTests {
 	private static final String PRJ_NAME = "build";
 
 	public BuildChangeTests(String name) {
-		super(PLUGIN_ID, name);
+		super(name);
 	}
 
 	private static final List<ChangeListener> changeListeners = new ArrayList<BuildChangeTests.ChangeListener>();
@@ -82,7 +82,7 @@ public class BuildChangeTests extends AbstractModelTests {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		setUpProject(PRJ_NAME);
+		setUpProject(PRJ_NAME, PLUGIN_ID);
 	}
 
 	@Override

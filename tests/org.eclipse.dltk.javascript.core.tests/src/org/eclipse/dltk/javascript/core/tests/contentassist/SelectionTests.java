@@ -50,7 +50,7 @@ public class SelectionTests extends AbstractModelTests {
 	private static final String PRJ_NAME = "selection";
 
 	public SelectionTests(String name) {
-		super(PLUGIN_ID, name);
+		super(name);
 	}
 
 	public static Suite suite() {
@@ -60,7 +60,7 @@ public class SelectionTests extends AbstractModelTests {
 	@Override
 	public void setUpSuite() throws Exception {
 		super.setUpSuite();
-		setUpScriptProject(PRJ_NAME);
+		setUpScriptProject(PRJ_NAME, PLUGIN_ID);
 		waitUntilIndexesReady();
 	}
 
